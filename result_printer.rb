@@ -19,8 +19,6 @@ class ResultPrinter
       end
       counter += 1
     end
-
-
   end
 
   def print_status(game)
