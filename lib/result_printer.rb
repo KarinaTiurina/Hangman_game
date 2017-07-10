@@ -1,13 +1,13 @@
 class ResultPrinter
-  def initialize
+  def initialize(game)
     @status_image = []
 
     current_path = File.dirname(__FILE__)
     counter = 0
 
-    while counter <= 7
+    while counter <= game.max_errors
       begin
-        file_name = current_path + "/images/#{counter}.txt"
+        file_name = current_path + "/../images/#{counter}.txt"
 
         f = File.new(file_name, 'r:UTF-8')
         @status_image << f.read
@@ -29,14 +29,14 @@ class ResultPrinter
 
     print_viselitsa(game.errors)
 
-    if game.errors >= 7
+    if game.lost?
       puts "Вы проиграли :("
       puts "Было загадано: #{game.letters.join}"
     else
-      if (game.letters.uniq - game.good_letters).empty?
+      if game.won?
         puts "Поздравляем! Вы выиграли!\n\n"
       else
-        puts "У вас осталось попыток: " + (7 - game.errors).to_s
+        puts "У вас осталось попыток: #{game.errors_left}"
       end
     end
   end
